@@ -1,6 +1,28 @@
 react-starter
 =============
 
+Version browserify
+------------------
+
+Installation :
+```bash
+npm install
+npm install -g watchify
+```
+
+Lancement du watch :
+```bash
+npm run watch
+```
+
+Lancement du serveur :
+```bash
+npm run server
+```
+
+Version statique
+----------------
+
 ```html
 <!doctype html>
 <html>

@@ -1,0 +1,30 @@
+{
+  "name": "react-starter",
+  "version": "0.0.0",
+  "description": "react-starter\r =============",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "watchify index.js -o bundle.js -v -d",
+    "server": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/thibauts/react-starter.git"
+  },
+  "author": "thibauts",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/thibauts/react-starter/issues"
+  },
+  "dependencies": {
+    "react": "~0.11.2",
+    "reactify": "~0.14.0",
+    "express": "~4.9.5"
+  },
+  "browserify": {
+    "transform": [
+      "reactify"
+    ]
+  }
+}
