@@ -24,33 +24,74 @@ Version statique
 ----------------
 
 ```html
-<!doctype html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <title>React Starter</title>
-  <script src="http://fb.me/react-0.11.2.js"></script>
-  <script src="http://fb.me/JSXTransformer-0.11.2.js"></script>
-</head>
-<body>
-  <div id="app"></div>
-  <script type="text/jsx">
-    /** @jsx React.DOM */
+/** @jsx React.DOM */
+var React = require('react');
 
-    var HelloComponent = React.createClass({
-      render: function() {
-        return (
-          <div>Hello, {this.props.name} !</div>
-        );
-      }
-    });
+var VideoPlayer = React.createClass({
 
-    React.renderComponent(
-      <HelloComponent name="React" />,
-      document.getElementById('app')
+  getDefaultProps: function() {
+    return {
+      location: 'http://www.quirksmode.org/html5/videos/big_buck_bunny.webm'
+    };
+  },
+
+  getInitialState: function() {
+    return {
+      progression: '0%'
+    };
+  },
+
+  componentDidMount: function() {
+    this.refs.player.getDOMNode().addEventListener('progress', this.handleProgress);
+  },
+
+  render: function() {
+    return (
+      <div className="video-player">
+        <video ref="player">
+          <source src={this.props.location} type='video/webm;codecs="vp8, vorbis"' />
+        </video>
+
+        <div className="controls media">
+          <div className="pull-left">
+            <a className="control-play" href="javascript:void(0)" onClick={this.handlePlay}>
+              |>
+            </a>
+
+            <a className="control-play" href="javascript:void(0)" onClick={this.handlePause}>
+              ||
+            </a>
+          </div>
+
+          <div className="progress media-body">
+            <div className="progress-bar" style={{"width": this.state.progression}}></div>
+          </div>
+        </div>
+      </div>
     );
+  },
 
-  </script>
-</body>
-</html>
+  handlePause: function() {
+    this.refs.player.getDOMNode().pause();
+  },
+
+  handlePlay: function() {
+    this.refs.player.getDOMNode().play();
+  },
+
+  handleProgress: function(){
+    var videoEl = this.refs.player.getDOMNode();
+    console.log('handleProgress', videoEl.duration);
+    if(!videoEl.duration)
+      return false;
+    var progress = ( videoEl.currentTime / videoEl.duration ) * 100 + '%';
+    this.setState({progression: progress});
+  }
+});
+
+React.renderComponent(
+<VideoPlayer/>,
+  document.querySelector('.video-player-container')
+);
+
 ```
